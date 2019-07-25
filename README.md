@@ -1,0 +1,1 @@
+## Collection of Elastic APM go-agent examples integrated into Kubernetes
