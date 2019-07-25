@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: apm-test
+  namespace: kube-logging
+  labels:
+    app: apm-test
+spec: 
+  ports:
+  - port: 8000
+  selector:
+    app: apm-test
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apm-test
+  namespace: kube-logging
+  labels:
+    app: apm-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apm-test
+  template:
+    metadata:
+      labels:
+        app: apm-test
+    spec:
+      containers:
+      - name: apm-test
+        image: 192.168.8.170:5000/go-apm-test:v1.0.0
+        env:
+        - name: ELASTIC_APM_SERVER_URL
+          value: http://apm-server:8200
+        ports:
+        - containerPort: 8000
+        imagePullPolicy: Always
