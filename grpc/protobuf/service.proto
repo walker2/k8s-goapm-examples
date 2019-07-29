@@ -12,7 +12,3 @@ message Response {
 service ServiceA {
     rpc Send(Request) returns (Response);
 }
-
-//service ServiceB {
-//    rpc Send(Request) returns (Response);
-//}
