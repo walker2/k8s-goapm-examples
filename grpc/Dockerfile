@@ -5,6 +5,7 @@ RUN apk update && apk add git
 WORKDIR /go/src/github.com/walker2/k8s-goapm-examples/grpc
 
 ENV CGO_ENABLED=0
+COPY protobuf ./protobuf
 COPY *.go ./
 
 RUN go get
