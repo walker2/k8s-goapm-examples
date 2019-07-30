@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: apm-grpc-test
+  namespace: kube-logging
+  labels:
+    app: apm-grpc-test
+spec: 
+  ports:
+  - port: 8001
+  selector:
+    app: apm-grpc-test
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apm-grpc-test
+  namespace: kube-logging
+  labels:
+    app: apm-grpc-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apm-grpc-test
+  template:
+    metadata:
+      labels:
+        app: apm-grpc-test
+    spec:
+      containers:
+      - name: apm-grpc-test
+        image: 192.168.8.170:5000/go-apm-grpc-test:v1.0.0
+        env:
+        - name: ELASTIC_APM_SERVER_URL
+          value: http://apm-server:8200
+        ports:
+        - containerPort: 8000
+        imagePullPolicy: Always
